@@ -24,6 +24,16 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.InyectarDependencias(builder.Configuration);
 
+// CORS
+builder.Services.AddCors(options => {
+    options.AddPolicy("NuevaPolitica", app =>
+    {
+        app.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,7 +44,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // IMPORTANTE: CORS antes de MapControllers
-app.UseCors("AllowAll");
+app.UseCors("NuevaPolitica");
 
 app.UseAuthorization();
 
